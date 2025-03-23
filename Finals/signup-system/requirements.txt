@@ -1,0 +1,14 @@
+PROJECT DETAILS:
+
+Create a program with GUI that has the following specifications:
+
+The program must have data persistence (You can use file or MySQL database)
+The program must have a menu which shows the different operations (Sign-up, View all records, Search a record, Exit
+A sign-up form is used to create new records. The information must be the following:
+First name
+Middle name
+Last name
+Birthday
+Gender
+The program must have exception handling
+The program must have the capability to show all the existing records and search for a particular record.
