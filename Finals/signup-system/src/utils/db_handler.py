@@ -1,57 +1,65 @@
-import sqlite3
-from sqlite3 import Error
+import json
+import os
 import logging
+from datetime import datetime
 
 class DatabaseHandler:
-    def __init__(self, db_file):
-        self.db_file = db_file
-        self.conn = None
-        self._create_tables()
+    def __init__(self, file_path):
+        self.file_path = file_path
+        self._ensure_file_exists()
 
-    def connect(self):
+    def _ensure_file_exists(self):
+        if not os.path.exists(self.file_path):
+            with open(self.file_path, 'w') as f:
+                json.dump([], f)
+
+    def save_record(self, record):
         try:
-            self.conn = sqlite3.connect(self.db_file)
-            self.conn.row_factory = sqlite3.Row
-            return self.conn
-        except Error as e:
-            logging.error(f"Database connection error: {e}")
+            records = self.get_all_records()
+            record['created_at'] = datetime.now().isoformat()
+            records.append(record)
+            with open(self.file_path, 'w') as f:
+                json.dump(records, f, indent=4)
+            return True
+        except Exception as e:
+            logging.error(f"Error saving record: {e}")
             raise
 
-    def _create_tables(self):
-        create_users_table = """
-        CREATE TABLE IF NOT EXISTS users (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            first_name TEXT NOT NULL,
-            middle_name TEXT,
-            last_name TEXT NOT NULL,
-            birthday TEXT NOT NULL,
-            gender TEXT NOT NULL,
-            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-        );
-        """
+    def get_all_records(self):
         try:
-            with self.connect() as conn:
-                conn.execute(create_users_table)
-        except Error as e:
-            logging.error(f"Error creating tables: {e}")
+            with open(self.file_path, 'r') as f:
+                return json.load(f)
+        except Exception as e:
+            logging.error(f"Error reading records: {e}")
+            return []
+
+    def search_records(self, criteria):
+        records = self.get_all_records()
+        results = []
+        for record in records:
+            if all(record.get(key, '').lower().startswith(str(value).lower()) 
+                for key, value in criteria.items()):
+                results.append(record)
+        return results
+
+    def delete_record(self, index):
+        try:
+            records = self.get_all_records()
+            if 0 <= index < len(records):
+                del records[index]
+                with open(self.file_path, 'w') as f:
+                    json.dump(records, f, indent=4)
+                return True
+            return False
+        except Exception as e:
+            logging.error(f"Error deleting record: {e}")
             raise
 
-    def execute_query(self, query, params=()):
+    def reset_records(self):
         try:
-            with self.connect() as conn:
-                cursor = conn.cursor()
-                cursor.execute(query, params)
-                return cursor.lastrowid
-        except Error as e:
-            logging.error(f"Query execution error: {e}")
-            raise
-
-    def fetch_all(self, query, params=()):
-        try:
-            with self.connect() as conn:
-                cursor = conn.cursor()
-                cursor.execute(query, params)
-                return [dict(row) for row in cursor.fetchall()]
-        except Error as e:
-            logging.error(f"Error fetching records: {e}")
+            with open(self.file_path, 'w') as f:
+                json.dump([], f)
+            return True
+        except Exception as e:
+            logging.error(f"Error resetting records: {e}")
             raise
