@@ -46,11 +46,13 @@ class SignupForm:
         birthday = self.birthday_entry.get()
         gender = self.gender_var.get()
 
+        # Only validate first_name, last_name, and birthday as required fields
         if not all([first_name, last_name, birthday]):
-            messagebox.showerror("Input Error", "Please fill in all required fields.")
+            messagebox.showerror("Input Error", "Please fill in all required fields (First Name, Last Name, Birthday).")
             return
 
         try:
+            # If middle_name is empty, it will be set to "N/A" in the User class
             user = User(first_name, middle_name, last_name, birthday, gender)
             add_user_to_db(user)
             messagebox.showinfo("Success", "User signed up successfully!")

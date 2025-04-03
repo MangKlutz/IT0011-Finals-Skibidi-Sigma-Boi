@@ -3,7 +3,8 @@ from utils.validators import validate_name, validate_date, validate_gender
 class User:
     def __init__(self, first_name, middle_name, last_name, birthday, gender):
         self.first_name = validate_name(first_name)
-        self.middle_name = validate_name(middle_name) if middle_name else ""
+        # Make middle name optional
+        self.middle_name = validate_name(middle_name) if middle_name and middle_name.strip() else "N/A"
         self.last_name = validate_name(last_name)
         self.birthday = validate_date(birthday)
         self.gender = validate_gender(gender)
