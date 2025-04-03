@@ -3,3 +3,22 @@
 2025-04-01 11:29:15,270 - INFO - Ready
 2025-04-01 11:38:13,494 - INFO - Ready
 2025-04-01 11:38:27,417 - INFO - Record saved successfully!
+2025-04-03 13:23:45,945 - INFO - Ready
+2025-04-03 13:24:09,001 - INFO - Record saved successfully!
+2025-04-03 17:44:43,679 - INFO - Ready
+2025-04-03 17:59:58,535 - INFO - Error: First Name cannot be empty
+2025-04-03 18:02:22,403 - INFO - Error: Middle Name cannot be empty
+2025-04-03 18:02:30,464 - INFO - Error: Middle Name cannot be empty
+2025-04-03 18:02:44,102 - INFO - Error: Birthday must be in YYYY-MM-DD format
+2025-04-03 18:06:50,275 - INFO - Error: Middle Name cannot be empty
+2025-04-03 18:08:25,335 - INFO - Error: Last Name cannot be empty
+2025-04-03 18:09:22,646 - INFO - Error: First Name cannot be empty
+2025-04-03 18:11:52,701 - INFO - Error: Birthday must be in YYYY-MM-DD format
+2025-04-03 18:14:43,579 - INFO - Record saved successfully!
+2025-04-03 18:58:01,256 - INFO - Data exported to C:/Users/ABDULLAH O. ADMAIN/Downloads/records.csv
+2025-04-03 19:05:39,378 - INFO - Ready
+2025-04-03 19:13:28,220 - INFO - Ready
+2025-04-03 19:16:17,795 - INFO - All records have been reset
+2025-04-03 19:17:42,788 - INFO - Ready
+2025-04-03 19:19:40,761 - INFO - All records have been reset
+2025-04-03 19:19:44,884 - INFO - All records have been reset
