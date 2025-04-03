@@ -10,7 +10,7 @@ import re
 class SignupSystem:
     def __init__(self):
         self.root = tk.Tk()
-        self.root.title("Record Management System")
+        self.root.title("Record System System")
         self.root.geometry("600x400")
         self.data_file = "records.json"
         self.load_records()

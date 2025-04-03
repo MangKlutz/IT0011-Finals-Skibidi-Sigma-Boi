@@ -1,7 +1,7 @@
 # src/controllers/user_controller.py
 
-from models.user import User
-from utils.db_handler import DatabaseHandler
+from ..models.user import User
+from ..utils.db_handler import DatabaseHandler
 import os
 
 class UserController:

@@ -1,24 +1,27 @@
 import tkinter as tk
 from tkinter import messagebox
-from src.models.user import User
-from src.utils.db_handler import add_user_to_db
+from ..models.user import User
+from ..utils.db_handler import add_user_to_db
 
 class SignupForm:
     def __init__(self, master):
         self.master = master
         self.master.title("Sign Up Form")
 
-        self.first_name_label = tk.Label(master, text="First Name")
+        # First Name
+        self.first_name_label = tk.Label(master, text="First Name*")
         self.first_name_label.pack()
         self.first_name_entry = tk.Entry(master)
         self.first_name_entry.pack()
 
-        self.middle_name_label = tk.Label(master, text="Middle Name")
+        # Middle Name (optional)
+        self.middle_name_label = tk.Label(master, text="Middle Name (Optional - N/A if not applicable)")
         self.middle_name_label.pack()
         self.middle_name_entry = tk.Entry(master)
         self.middle_name_entry.pack()
 
-        self.last_name_label = tk.Label(master, text="Last Name")
+        # Last Name
+        self.last_name_label = tk.Label(master, text="Last Name*")
         self.last_name_label.pack()
         self.last_name_entry = tk.Entry(master)
         self.last_name_entry.pack()
@@ -41,18 +44,17 @@ class SignupForm:
 
     def submit(self):
         first_name = self.first_name_entry.get()
-        middle_name = self.middle_name_entry.get()
+        middle_name = self.middle_name_entry.get().strip()  # Strip whitespace
         last_name = self.last_name_entry.get()
         birthday = self.birthday_entry.get()
         gender = self.gender_var.get()
 
-        # Only validate first_name, last_name, and birthday as required fields
-        if not all([first_name, last_name, birthday]):
-            messagebox.showerror("Input Error", "Please fill in all required fields (First Name, Last Name, Birthday).")
+        # Validate required fields
+        if not all([first_name, last_name, birthday]) or first_name.upper() == "N/A" or last_name.upper() == "N/A":
+            messagebox.showerror("Input Error", "First Name and Last Name are required fields and cannot be 'N/A'.")
             return
 
         try:
-            # If middle_name is empty, it will be set to "N/A" in the User class
             user = User(first_name, middle_name, last_name, birthday, gender)
             add_user_to_db(user)
             messagebox.showinfo("Success", "User signed up successfully!")
