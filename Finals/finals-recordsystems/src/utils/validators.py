@@ -2,12 +2,14 @@ import re
 from datetime import datetime
 
 def validate_name(name):
+    if name.upper() == "N/A":
+        return "N/A"
     if not name or not name.strip():
-        raise ValueError("Name cannot be empty.\nPlease enter a valid name using letters only.")
+        raise ValueError("Name cannot be empty.\nPlease enter a valid name using letters only or 'N/A' if not applicable.")
     if not re.match("^[A-Za-z ]+$", name):
-        raise ValueError("Name can only contain letters and spaces.\nExample: John Smith")
+        raise ValueError("Name can only contain letters and spaces or 'N/A' if not applicable.\nExample: John Smith")
     if len(name.strip()) < 2:
-        raise ValueError("Name must be at least 2 characters long.\nExample: Li or John")
+        raise ValueError("Name must be at least 2 characters long or 'N/A' if not applicable.\nExample: Li or John")
     if len(name.strip()) > 50:
         raise ValueError("Name is too long (maximum 50 characters).\nPlease enter a shorter name.")
     return name.strip()
